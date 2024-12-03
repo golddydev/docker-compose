@@ -4,7 +4,4 @@ services:
    ports:
      - "3306:3306"
    environment:
-     - MYSQL_USER=default
-     - MYSQL_PASSWORD=defaultPassword
      - MYSQL_ROOT_PASSWORD=defaultPassword
-     - MYSQL_DATABASE=default

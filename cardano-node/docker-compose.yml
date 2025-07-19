@@ -1,0 +1,8 @@
+services:
+  cardano-node:
+    image: ghcr.io/intersectmbo/cardano-node:10.4.1
+    volumes:
+      - ./mounted/ipc:/ipc
+      - ./mounted/db:/data/db
+    environment:
+      - NETWORK=preprod

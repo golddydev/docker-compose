@@ -1,8 +1,41 @@
+# services:
+#   cardano-node:
+#     image: ghcr.io/intersectmbo/cardano-node:10.4.1
+#     volumes:
+#       - ./mounted/ipc:/ipc
+#       - ./mounted/db:/data/db
+#       - ./mounted/environments:/data/environments
+#     ports:
+#       - "3001:3001"
+#     environment:
+#       - NETWORK=preprod
+
 services:
   cardano-node:
-    image: ghcr.io/intersectmbo/cardano-node:10.4.1
+    image: ghcr.io/intersectmbo/cardano-node:10.2
     volumes:
-      - ./mounted/ipc:/ipc
-      - ./mounted/db:/data/db
+      - ./devnet:/devnet
     environment:
-      - NETWORK=preprod
+      - CARDANO_BLOCK_PRODUCER=true
+      - CARDANO_SOCKET_PATH=/devnet/node.socket # used by cardano-node
+      - CARDANO_NODE_SOCKET_PATH=/devnet/node.socket # used by cardano-cli
+    command:
+      [
+        "run",
+        "--config",
+        "/devnet/cardano-node.json",
+        "--topology",
+        "/devnet/topology.json",
+        "--database-path",
+        "/devnet/db",
+        "--shelley-kes-key",
+        "/devnet/kes.skey",
+        "--shelley-vrf-key",
+        "/devnet/vrf.skey",
+        "--shelley-operational-certificate",
+        "/devnet/opcert.cert",
+        "--byron-delegation-certificate",
+        "/devnet/byron-delegation.cert",
+        "--byron-signing-key",
+        "/devnet/byron-delegate.key",
+      ]

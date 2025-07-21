@@ -1,27 +1,15 @@
 services:
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:3-management
     container_name: rabbitmq
-    restart: always
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672" # AMQP protocol
+      - "15672:15672" # Web UI (RabbitMQ Management)
     environment:
-      RABBITMQ_DEFAULT_USER: defaultUser
-      RABBITMQ_DEFAULT_PASS: defaultPassword
-    configs:
-      - source: rabbitmq-plugins
-        target: /etc/rabbitmq/enabled_plugins
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     volumes:
-      - rabbitmq-lib:/var/lib/rabbitmq/
-      - rabbitmq-log:/var/log/rabbitmq
-
-configs:
-  rabbitmq-plugins:
-    content: "[rabbitmq_management]."
+      - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
-  rabbitmq-lib:
-    driver: local
-  rabbitmq-log:
-    driver: local
+  rabbitmq_data:

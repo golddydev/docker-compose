@@ -1,0 +1,64 @@
+services:
+  cardano-node-1:
+    command:
+      [
+        run,
+        --config,
+        /config/config.json,
+        --topology,
+        /config/topology.json,
+        --database-path,
+        /data,
+        --port,
+        "3001",
+      ]
+    entrypoint: cardano-node
+    image: ghcr.io/blinklabs-io/cardano-node:10.5.1
+    ports:
+      - 3001:3001
+    # user: 1000:1000
+    volumes:
+      - ./configuration:/config
+      - ./db:/data
+  cardano-node-2:
+    command:
+      [
+        run,
+        --config,
+        /config/config.json,
+        --topology,
+        /config/topology.json,
+        --database-path,
+        /data,
+        --port,
+        "3002",
+      ]
+    entrypoint: cardano-node
+    image: ghcr.io/blinklabs-io/cardano-node:10.5.1
+    ports:
+      - 3002:3002
+    # user: 1000:1000
+    volumes:
+      - ./configuration:/config
+      - ./db-2:/data
+  cardano-node-3:
+    command:
+      [
+        run,
+        --config,
+        /config/config.json,
+        --topology,
+        /config/topology.json,
+        --database-path,
+        /data,
+        --port,
+        "3003",
+      ]
+    entrypoint: cardano-node
+    image: ghcr.io/blinklabs-io/cardano-node:10.5.1
+    ports:
+      - 3003:3003
+    # user: 1000:1000
+    volumes:
+      - ./configuration:/config
+      - ./db-3:/data
